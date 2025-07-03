@@ -75,4 +75,8 @@ public class ScrapedAnnonceController {
 
         return results;
     }
+    @GetMapping("/all")
+    public List<ScrapedAnnonce> getAllSaved() {
+        return scrapedAnnonceService.getAll();
+    }
 }
