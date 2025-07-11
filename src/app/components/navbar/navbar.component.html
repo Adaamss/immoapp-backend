@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+  <div class="container-fluid">
+   
+
+    <div class="collapse navbar-collapse">
+     
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link fw-semibold text-dark px-3"
+            routerLink="/home"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link fw-semibold text-dark px-3"
+            routerLink="/annonces"
+            routerLinkActive="active"
+          >Annonces</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link fw-semibold text-dark px-3"
+            routerLink="/scraped"
+            routerLinkActive="active"
+          >Scraped Data</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link fw-semibold text-dark px-3"
+            routerLink="/profile"
+            routerLinkActive="active"
+          >Profile</a>
+        </li>
+      </ul>
+
+    
+      <div class="d-flex align-items-center">
+       
+        <ng-container *ngIf="!isLoggedIn()">
+          <a class="btn btn-outline-primary me-2" routerLink="/login">Login</a>
+          <a class="btn btn-primary" routerLink="/register">Register</a>
+        </ng-container>
+
+    
+        <ng-container *ngIf="isLoggedIn()">
+          <span class="navbar-text me-3">
+            Hello, {{ userService.getUsername() }}
+          </span>
+          <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</nav>

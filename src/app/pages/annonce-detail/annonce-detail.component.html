@@ -1,0 +1,19 @@
+<div class="container mt-4">
+  <div *ngIf="loading" class="alert alert-info">Loading details…</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div *ngIf="!loading && annonce" class="card">
+    <div class="card-body">
+      <h2 class="card-title">{{ annonce.title }}</h2>
+      <p><strong>Location:</strong> {{ annonce.location }}</p>
+      <p><strong>Price:</strong> {{ annonce.price | currency:'TND' }}</p>
+      <p><strong>Description:</strong></p>
+      <p class="card-text">{{ annonce.description }}</p>
+   
+
+      <a routerLink="/annonces" class="btn btn-secondary mt-3">
+        ← Back to list
+      </a>
+    </div>
+  </div>
+</div>

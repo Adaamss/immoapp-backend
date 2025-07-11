@@ -1,0 +1,44 @@
+<!-- src/app/pages/annonce-form/annonce-form.component.html -->
+<div class="container mt-4">
+  <h2 class="mb-4 text-primary">
+    {{ isEdit ? 'Edit' : 'New' }} Annonce
+  </h2>
+
+  <div *ngIf="loading" class="alert alert-info">Loading…</div>
+  <div *ngIf="error"   class="alert alert-danger">{{ error }}</div>
+
+  <form *ngIf="!loading" (ngSubmit)="onSubmit()" #form="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <input name="title" [(ngModel)]="annonce.title"
+             required class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Location</label>
+      <input name="location" [(ngModel)]="annonce.location"
+             required class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Price (TND)</label>
+      <input name="price" type="number" [(ngModel)]="annonce.price"
+             required class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea name="description" [(ngModel)]="annonce.description"
+                class="form-control"></textarea>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary"
+            [disabled]="form.invalid">
+      {{ isEdit ? 'Update' : 'Create' }}
+    </button>
+    <a routerLink="/annonces" class="btn btn-secondary ms-2">
+      Cancel
+    </a>
+  </form>
+</div>

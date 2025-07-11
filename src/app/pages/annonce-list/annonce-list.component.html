@@ -1,0 +1,112 @@
+<div class="container mt-4">
+  <h2 class="mb-4 text-primary">All Annonces</h2>
+
+  <!-- + New and Filters row -->
+  <div class="d-flex flex-wrap align-items-end mb-3 g-2">
+    <button class="btn btn-success" routerLink="/annonces/new">
+      + New Annonce
+    </button>
+
+    <!-- Location filter -->
+    <div class="ms-3">
+      <label class="form-label mb-0">Location</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="locationFilter"
+        placeholder="e.g. Ariana"
+      />
+    </div>
+
+    <!-- Min price -->
+    <div class="ms-3">
+      <label class="form-label mb-0">Min Price</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="minPriceFilter"
+        placeholder="0"
+      />
+    </div>
+
+    <!-- Max price -->
+    <div class="ms-3">
+      <label class="form-label mb-0">Max Price</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="maxPriceFilter"
+        placeholder="Any"
+      />
+    </div>
+
+    <!-- Search button -->
+    <div class="ms-3">
+      <button
+        class="btn btn-primary"
+        (click)="loadAnnonces()"
+      >
+        Search
+      </button>
+      <button
+        class="btn btn-outline-secondary ms-1"
+        (click)="
+          locationFilter = '';
+          minPriceFilter = undefined;
+          maxPriceFilter = undefined;
+          loadAnnonces()
+        "
+      >
+        Clear
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="alert alert-info">Loading…</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <ul *ngIf="!loading && !error" class="list-group">
+    <li
+      *ngFor="let a of annonces"
+      class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-center"
+    >
+      <div>
+        <strong>{{ a.title }}</strong> —
+        {{ a.location }} —
+        {{ a.price | currency:'TND' }}
+
+        <!-- DETAILS, EDIT, DELETE -->
+        <a
+          [routerLink]="['/annonces', a.id!]"
+          class="btn btn-link btn-sm ms-2"
+        >Details</a>
+        <a
+          [routerLink]="['/annonces', a.id!, 'edit']"
+          class="btn btn-primary btn-sm ms-1"
+        >Edit</a>
+        <button
+          (click)="deleteAnnonce(a.id!)"
+          class="btn btn-danger btn-sm ms-1"
+        >Delete</button>
+      </div>
+
+      <!-- Rating stars -->
+      <div class="stars d-flex align-items-center mt-2 mt-md-0">
+        <ng-container *ngFor="let i of [1,2,3,4,5]">
+          <i
+            class="fa"
+            [ngClass]="{
+              'fa-star text-warning': (averageStars[a.id!] || 0) >= i,
+              'fa-star-o text-muted': (averageStars[a.id!] || 0) < i
+            }"
+            (click)="onRate(a.id!, i)"
+            style="cursor: pointer; margin-right: 4px; font-size: 1.2rem;"
+          ></i>
+        </ng-container>
+        <small class="ms-2">
+          ({{ (averageStars[a.id!] || 0) | number:'1.1-1' }})
+        </small>
+      </div>
+    </li>
+  </ul>
+</div>
